@@ -1,7 +1,10 @@
-# Auto Play Video Blocker
+# No Stop Video
 
 一个先进的 Chrome 扩展，专注于无缝视频播放体验，防止暂停并智能拦截鼠标移出事件，附带高效的学习通自动化刷课脚本。
+
 （持续优化更新中...）
+
+"No Stop Video 承载着无尽探索的意志——在知识的海洋中，视频永不停歇地流动，我们以技术之力打破时间与空间的桎梏，堂而皇之地追求学习的极致自由。"
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Python 3.8+](https://img.shields.io/badge/Python-3.8+-green.svg)](https://www.python.org) [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-yellow.svg)](https://www.google.com/chrome)
 
@@ -81,4 +84,4 @@ pip install pygetwindow pyautogui pycaw
 我会尽快回复，助你解决问题！
 
 ---
-_打造无缝学习与娱乐体验，Auto Play Video Blocker 与你同行！_
+_打造无缝学习与娱乐体验，No Stop Video 与你同行！_
