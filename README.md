@@ -2,13 +2,11 @@
 
 一个先进的 Chrome 扩展，专注于无缝视频播放体验，防止暂停并智能拦截鼠标移出事件，附带高效的学习通自动化刷课脚本。（持续优化更新中...）
 
-<p align="center">
 > **No Stop Video**  
 > *技碎枷锁鸣，影贯寰宇情。*  
 > *Tech shatters chains' chime, streams pierce the realm sublime.*  
 > *愿世间视频，皆自由流淌。*  
 > *May all videos flow, unbound and strong.*
-</p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Python 3.8+](https://img.shields.io/badge/Python-3.8+-green.svg)](https://www.python.org) [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-yellow.svg)](https://www.google.com/chrome)
 
