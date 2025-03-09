@@ -4,6 +4,7 @@ import time
 import os
 # from PIL import Image
 from pycaw.pycaw import AudioUtilities, ISimpleAudioVolume
+from win32process import GetWindowThreadProcessId
 
 def set_window_state(window_title):
     """将窗口置顶并调整为普通大小"""
@@ -25,6 +26,7 @@ def set_window_state(window_title):
     win.resizeTo(1280, 720)
     win.moveTo(0, 0)
     print(f"Window adjusted to size (1280, 720) at (0, 0)")
+
     return win
 
 def locate_image(image_file, region=None, confidence=0.9):
@@ -55,18 +57,66 @@ def scroll_to_top(win):
     time.sleep(3) 
     print("Scrolled to top")
 
-def mute_chrome_process():
+def unmute_all_chrome_windows():
+    """解除所有 Chrome 窗口的静音"""
+    sessions = AudioUtilities.GetAllSessions()
+    muted_count = 0
+    for session in sessions:
+        if session.Process and "chrome" in session.Process.name().lower():
+            volume = session._ctl.QueryInterface(ISimpleAudioVolume)
+            volume.SetMute(0, None)  # 0 = unmute
+            muted_count += 1
+    if muted_count > 0:
+        print(f"Unmuted {muted_count} Chrome window(s) via pycaw")
+    else:
+        print("No muted Chrome windows found")
+    time.sleep(3)
+    return muted_count > 0
+
+def mute_chrome_process(win):
     """使用 pycaw 静音 Chrome 进程"""
+    if not win:
+        print("No current window provided for muting")
+        return False
+    
+    # _, pid = GetWindowThreadProcessId(win._hWnd)
+    # print(f"Current window PID: {pid}, Title: {win.title}")
+
     sessions = AudioUtilities.GetAllSessions()
     for session in sessions:
         if session.Process and "chrome" in session.Process.name().lower():
             volume = session._ctl.QueryInterface(ISimpleAudioVolume)
-            volume.SetMute(1, None)  # 1 = mute, 0 = unmute
-            print("Muted Chrome process via pycaw")
-            time.sleep(3)  # 延长等待时间
+            volume.SetMute(1, None)  # 1 = mute
+            print(f"Muted Chrome session with PID {session.Process.pid} (most recent active)")
+            time.sleep(3)
             return True
-    print("Chrome process not found for muting")
+    
+    print("No Chrome audio sessions found for muting")
     return False
+    # chrome_sessions = []
+    # for session in sessions:
+    #     if session.Process and "chrome" in session.Process.name().lower():
+    #         chrome_sessions.append(session)
+    #         print(f"Found Chrome session with PID: {session.Process.pid}")
+    
+    # if not chrome_sessions:
+    #     print("No Chrome audio sessions found")
+    #     return False
+
+    # for session in chrome_sessions:
+    #     if session.Process.pid == pid:
+    #         volume = session._ctl.QueryInterface(ISimpleAudioVolume)
+    #         volume.SetMute(1, None)  # 1 = mute
+    #         print(f"Muted Chrome window with matching PID {pid}")
+    #         time.sleep(3)
+    #         return True
+        
+    # print("No exact PID match found, muting the first Chrome session as fallback")
+    # volume = chrome_sessions[0]._ctl.QueryInterface(ISimpleAudioVolume)
+    # volume.SetMute(1, None)
+    # print(f"Muted Chrome session with PID {chrome_sessions[0].Process.pid} (fallback)")
+    # time.sleep(3)
+    # return True
 
 def play_and_mute_window(win, region):
     """点击 on.png 播放视频，然后使用 pycaw 静音 Chrome"""
@@ -78,13 +128,13 @@ def play_and_mute_window(win, region):
         center_x, center_y, _, _ = on_pos
         pyautogui.click(center_x, center_y)
         print("Clicked on.png to play video")
-        time.sleep(5)  
+        # time.sleep(5)  
     else:
         print("on.png not found, skipping play step")
         return False
     
     # 使用 pycaw 静音 Chrome
-    if mute_chrome_process():
+    if mute_chrome_process(win):
         return True
     return False
 
@@ -105,13 +155,15 @@ def main():
             print("Chrome window not found, exiting.")
             break
         
-        region = (win.left, win.top, win.width, win.height)
+        # region = (win.left, win.top, win.width, win.height)
+        region = (0, 0, 1280, 720)
         
         # 2. 检测 yellow_flag.png
         print("Checking for yellow_flag.png...")
         scroll_to_top(win)
         if not locate_image(yellow_flag, region):
             print("yellow_flag.png not found, task complete.")
+            unmute_all_chrome_windows()
             break
         
         # 3. 等待 Task_com.png 出现
@@ -141,7 +193,7 @@ def main():
         notice = locate_image(notice_flag, region)
         if notice:
             print("##### Test Attention! #####")
-            time.sleep(5) # For safety test only.
+            time.sleep(1) # For safety test only.
             tip = locate_image(tip_flag, region)
             if tip:
                 break
