@@ -1,6 +1,7 @@
 # Auto Play Video Blocker
 
 一个先进的 Chrome 扩展，专注于无缝视频播放体验，防止暂停并智能拦截鼠标移出事件，附带高效的学习通自动化刷课脚本。
+（持续优化更新中...）
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Python 3.8+](https://img.shields.io/badge/Python-3.8+-green.svg)](https://www.python.org) [![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-yellow.svg)](https://www.google.com/chrome)
 
@@ -71,6 +72,13 @@ pip install pygetwindow pyautogui pycaw
 
 ## 📜 许可证
 本项目遵循 [MIT 许可证](https://opensource.org/licenses/MIT)，开源共享，欢迎贡献与定制。
+
+## 📬 联系与支持
+如在使用过程中遇到任何问题、技术疑问或建议，欢迎随时联系我：
+- **邮箱**: [zhanghoubing777@gmail.com](mailto:your.email@example.com)
+- **GitHub Issues**: [提交问题](https://github.com/BlairCode/NoStopVideo/issues)
+- **社区支持**: 加入我们的 [讨论区](https://github.com/BlairCode/NoStopVideo/discussions) 与其他用户交流
+我会尽快回复，助你解决问题！
 
 ---
 _打造无缝学习与娱乐体验，Auto Play Video Blocker 与你同行！_
