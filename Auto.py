@@ -23,9 +23,9 @@ def set_window_state(window_title):
     win.activate()
     time.sleep(3) 
     
-    win.resizeTo(1280, 720)
+    win.resizeTo(1280, 880)
     win.moveTo(0, 0)
-    print(f"Window adjusted to size (1280, 720) at (0, 0)")
+    print(f"Window adjusted to size (1280, 880) at (0, 0)")
 
     return win
 
@@ -147,6 +147,9 @@ def main():
     # on_button = os.path.join(image_dir, "on.png")            # 播放按钮
     notice_flag = os.path.join(image_dir, "notice_flag.png") # 弹窗标志
     tip_flag = os.path.join(image_dir, "tip_flag.png")
+    Ques_in_v = os.path.join(image_dir, "True_or_false.png")
+    selector_button = os.path.join(image_dir, "selector.png")
+    submit_button = os.path.join(image_dir, "submit.png")
     
     while True:
         # 1. 调整 Chrome 窗口
@@ -156,7 +159,7 @@ def main():
             break
         
         # region = (win.left, win.top, win.width, win.height)
-        region = (0, 0, 1280, 720)
+        region = (0, 0, 1280, 880)
         
         # 2. 检测 yellow_flag.png
         print("Checking for yellow_flag.png...")
@@ -168,12 +171,45 @@ def main():
         
         # 3. 等待 Task_com.png 出现
         print("Waiting for video to complete (Task_com.png)...")
+
         while True:
             tc = locate_image(task_com, region)
             if tc:
                 print("Video completed!")
                 break
-            time.sleep(5) 
+
+            ques = locate_image(Ques_in_v, region)
+            if ques:
+                try:
+                    matches = list(pyautogui.locateAllOnScreen(selector_button, region=region, confidence=0.95))
+                    if not matches:
+                        print(f"No matches found for {selector_button}")
+                        time.sleep(5)
+                        continue
+
+                    matches.sort(key=lambda pos: pos.top)
+
+                    for i, pos in enumerate(matches):
+                        center_x = pos.left + pos.width // 2
+                        center_y = pos.top + pos.height // 2
+                        print(f"Match {i+1}: Found {selector_button} at screen ({pos.left}, {pos.top}), clicking center ({center_x}, {center_y})")
+                        pyautogui.click(center_x, center_y)
+                        time.sleep(0.5)
+
+                        sub = locate_image(submit_button, region)
+                        if sub:
+                            center_x, center_y, _, _ = sub
+                            print(f"Clicking submit button at ({center_x}, {center_y})")
+                            pyautogui.click(center_x, center_y)
+                            time.sleep(1)
+                            
+                        if not locate_image(Ques_in_v, region):
+                            print("Question interface cleared!")
+                            break
+                except Exception as e:
+                    print(f"Error locating: {e}")
+
+            time.sleep(10) 
         
         # 4. 滑动到底部，点击 next_button.png 两次
         for i in range(2):
