@@ -21,7 +21,7 @@ def set_window_state(window_title):
     if win.isMaximized:
         win.restore()
     win.activate()
-    time.sleep(3) 
+    time.sleep(1) 
     
     win.resizeTo(1280, 880)
     win.moveTo(0, 0)
