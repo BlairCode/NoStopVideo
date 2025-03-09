@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "Auto Play Video Blocker",
     "version": "1.0",
-    "description": "Prevents videos from pausing on mouseout, designed for Chaoxing MOOC.",
+    "description": "Prevents videos from pausing on mouseout.",
     "permissions": ["storage", "scripting"],
     "host_permissions": ["<all_urls>"],
     "background": {
@@ -10,7 +10,7 @@
     },
     "content_scripts": [
       {
-        "matches": ["*://*.chaoxing.com/*"],
+        "matches": ["<all_urls>"],
         "js": ["content.js"],
         "run_at": "document_end"
       }

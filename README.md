@@ -69,7 +69,7 @@ pip install pygetwindow pyautogui pycaw
 ```
 
 ## ⚠️ 注意事项与风险
-- **定制化支持**：默认全站生效，可编辑 `manifest.json` 的 `host_permissions` 限定网站。
+- **定制化支持**：默认全站生效，可编辑 `manifest.json` 的 `host_permissions` 来限定网站 (如，将所有`["<all_urls>"]`改为`["*://*.chaoxing.com/*"]`)。
 - **潜在冲突**：可能影响需暂停交互的网站功能。
 - **安全限制**：部分网站启用 CSP，可能限制脚本执行。
 - **合规性**：请确保使用符合目标平台的服务条款。
