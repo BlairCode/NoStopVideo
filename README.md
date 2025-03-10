@@ -23,6 +23,9 @@
 - **任务状态检测**：智能翻页并确认任务完成。
 - **题目自动处理**：高效完成视频内简单题目。
 
+  ![Automation_window](https://github.com/user-attachments/assets/d90b7935-84ff-4c82-a675-f791da6ebf5e)
+
+
 ## 🛠️ 安装指南
 ### 下载与解压
 - 从 [GitHub Releases](https://github.com/BlairCode/NoStopVideo/releases/tag/v1.0.0) 下载 `nostopvideo-v1.0.0.zip`。
@@ -48,6 +51,7 @@
 - **扩展管理**：在 `chrome://extensions/` 禁用或移除扩展。
 - **静音控制**：`automation-program` 默认静音 Chrome，可点击界面“解除静音”按钮切换。
 - **测试建议**：首次运行 `Auto.exe` 时，建议观察几分钟，确保稳定后再长时间运行。
+- **窗口管理**：Chrome窗口置于最上方，`Auto.exe`才可检测到窗口信息。
 
 ## 📂 Release 结构
 ```
